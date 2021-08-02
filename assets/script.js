@@ -5,13 +5,22 @@ var lowerChar;
 var upperChar;
 var numChar;
 var specialChar;
+var criteriaCount;
+
+var criteria = {
+  lowers: "abcdefghijklmnopqrstuvwxyz",
+  uppers: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  numbers: "1234567890",
+  specials: "!@#$%^&*()_-",
+};
 
 // Write password to the #password input
 function writePassword() {
   lenValidation();
-  // var password = generatePassword();
-  // var passwordText = document.querySelector("#password");
-  //passwordText.value = password;
+  passwordSpecs();
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
 }
 
 // Add event listener to generate button
@@ -27,11 +36,10 @@ function lenValidation() {
     window.alert("Must be between 8 and 128.");
     lenValidation();
   }
-
-  console.log(passwordLength);
 }
 
 function passwordSpecs() {
+  criteriaCount = 0;
   upperChar = window.confirm("Would you like to include uppercase letters?");
   lowerChar = window.confirm("Would you like to include lowercase letters?");
   numChar = window.confirm("Would you like to include numbers?");
@@ -47,12 +55,49 @@ function passwordSpecs() {
   ) {
     window.alert("At least one criteria must be selected.");
     passwordSpecs();
-  } else {
-    console.log("Good job Bruce :)");
   }
+
+  if (lowerChar == true) {
+    criteriaCount++;
+  }
+  if (upperChar == true) {
+    criteriaCount++;
+  }
+  if (numChar == true) {
+    criteriaCount++;
+  }
+  if (specialChar == true) {
+    criteriaCount++;
+  }
+
+  console.log(criteriaCount);
 }
 
-passwordSpecs();
+lowerChar = true;
+
+function generatePassword() {
+  var tempPassword;
+  if (lowerChar == true) {
+    tempPassword += criteria.lowers;
+  }
+  if (upperChar == true) {
+    tempPassword += criteria.uppers;
+  }
+  if (numChar == true) {
+    tempPassword += criteria.numbers;
+  }
+  if (specialChar == true) {
+    tempPassword += criteria.specials;
+  }
+
+  var tempPassword2 = tempPassword.split("");
+
+  tempPassword2.sort(function (a, b) {
+    return 0.5 - Math.random();
+  });
+
+  return;
+}
 
 //Need to store the following:
 // passwordLength - integer
