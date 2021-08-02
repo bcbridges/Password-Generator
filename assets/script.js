@@ -46,11 +46,17 @@ function lenValidation() {
 // This fn gets user input for criteria to include and validates that there's at least 1 selected.
 function passwordSpecs() {
   // criteriaCount = 0;
-  upperChar = window.confirm("Would you like to include uppercase letters?");
-  lowerChar = window.confirm("Would you like to include lowercase letters?");
-  numChar = window.confirm("Would you like to include numbers?");
+  upperChar = window.confirm(
+    "Would you like to include UPPERCASE letters? \nOkay = Yes   Cancel = No"
+  );
+  lowerChar = window.confirm(
+    "Would you like to include lowercase letters? \nOkay = Yes   Cancel = No"
+  );
+  numChar = window.confirm(
+    "Would you like to include numbers? \nOkay = Yes   Cancel = No"
+  );
   specialChar = window.confirm(
-    "Would you like to include special characters? \n IE: $, %, &"
+    "Would you like to include special characters? \nIE: $, %, &, ~, ! \nOkay = Yes   Cancel = No"
   );
 
   if (
