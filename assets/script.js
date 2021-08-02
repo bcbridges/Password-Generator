@@ -1,17 +1,20 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
+
+// These are global to have them pass through multiple funcitons
 var passwordLength;
 var lowerChar;
 var upperChar;
 var numChar;
 var specialChar;
-var criteriaCount;
+// var criteriaCount;
 
+// Call on this later to create "array of possible values"
 var criteria = {
   lowers: "abcdefghijklmnopqrstuvwxyz",
   uppers: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  numbers: "1234567890",
-  specials: "!@#$%^&*()_-",
+  numbers: "12345678901234567890",
+  specials: "!@#$%^&*()_-~`'/|><!@#$%^&*()_-~`'/|><",
 };
 
 // Write password to the #password input
@@ -26,20 +29,23 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
+// This fnn gets user input for length of password and will validate it against criteria.
 function lenValidation() {
   passwordLength = window.prompt(
-    "How many characters long do you want the password?",
-    "Must be between 8 and 128."
+    "How many characters long would you like the password?",
+    "Must be between 8 and 128 characters."
   );
 
-  if (passwordLength < 8 || passwordLength > 128) {
-    window.alert("Must be between 8 and 128.");
+  if (passwordLength > 7 && passwordLength < 129) {
+  } else {
+    window.alert("Must be between 8 and 128 characters.");
     lenValidation();
   }
 }
 
+// This fn gets user input for criteria to include and validates that there's at least 1 selected.
 function passwordSpecs() {
-  criteriaCount = 0;
+  // criteriaCount = 0;
   upperChar = window.confirm("Would you like to include uppercase letters?");
   lowerChar = window.confirm("Would you like to include lowercase letters?");
   numChar = window.confirm("Would you like to include numbers?");
@@ -56,25 +62,10 @@ function passwordSpecs() {
     window.alert("At least one criteria must be selected.");
     passwordSpecs();
   }
-
-  if (lowerChar == true) {
-    criteriaCount++;
-  }
-  if (upperChar == true) {
-    criteriaCount++;
-  }
-  if (numChar == true) {
-    criteriaCount++;
-  }
-  if (specialChar == true) {
-    criteriaCount++;
-  }
-
-  console.log(criteriaCount);
 }
 
-lowerChar = true;
-
+// This fn creates array of all possible values to includes and randomly selects the amount chosen by user.
+// Flaw in this logic is that it MAY include the selected criteria, but is up to the sort method.
 function generatePassword() {
   var tempPassword;
   if (lowerChar == true) {
@@ -96,16 +87,10 @@ function generatePassword() {
     return 0.5 - Math.random();
   });
 
-  return;
+  var tempPassword3 = tempPassword2.slice(0, passwordLength);
+
+  var finalPassword = tempPassword3.join("");
+
+  console.log(finalPassword);
+  return finalPassword;
 }
-
-//Need to store the following:
-// passwordLength - integer
-// lowerChar - bool
-// upperChar - bool
-// numChar - bool
-// specialChar - bool
-
-//window.alert();
-//window.confirm();
-//window.prompt();
